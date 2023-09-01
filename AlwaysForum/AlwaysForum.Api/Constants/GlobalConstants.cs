@@ -1,0 +1,17 @@
+﻿namespace AlwaysForum.Api.Constants;
+
+public static class GlobalConstants
+{
+    public const string AdminUserName = "Admin";
+    public const string AdminPassword = "Admin123";
+    public const string AdminRoleName = "Admin";
+    public const string AdminEmail = "admin@AlwaysForum.com";
+
+    public static readonly string[] RequiredRoles = { "Moderator", "User" };
+
+    public const int MaximumPostDescriptionLength = 50;
+
+    public static readonly string[] RequiredReportTypes = { "Spam", "Hate speech", "Threats", "Insults", "Harassment" };
+
+    public const int MaxTagsOnPost = 3;
+}

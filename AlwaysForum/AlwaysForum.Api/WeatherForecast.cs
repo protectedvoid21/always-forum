@@ -1,4 +1,4 @@
-namespace AlwaysForumAPI;
+namespace AlwaysForum.Api;
 
 public class WeatherForecast
 {
