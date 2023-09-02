@@ -7,8 +7,8 @@ public class Reaction
     public ReactionType ReactionType { get; set; }
     
     public int PostId { get; set; }
-    public Post Post { get; set; }
+    public Post Post { get; set; } = null!;
 
-    public string UserId { get; set; }
-    public ForumUser User { get; set; }
+    public string UserId { get; set; } = null!;
+    public ForumUser User { get; set; } = null!;
 }
