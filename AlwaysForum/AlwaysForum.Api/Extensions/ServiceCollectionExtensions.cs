@@ -1,16 +1,16 @@
 ﻿using AlwaysForum.Api.Database;
 using AlwaysForum.Api.Models.Models;
-using AlwaysForum.Api.Services.CommentReports;
-using AlwaysForum.Api.Services.Comments;
-using AlwaysForum.Api.Services.CommentUpVotes;
-using AlwaysForum.Api.Services.Messages;
-using AlwaysForum.Api.Services.PostReports;
-using AlwaysForum.Api.Services.Posts;
-using AlwaysForum.Api.Services.Reactions;
-using AlwaysForum.Api.Services.ReportTypes;
-using AlwaysForum.Api.Services.Sections;
-using AlwaysForum.Api.Services.Tags;
-using AlwaysForum.Api.Services.Users;
+using AlwaysForum.Api.Repositories.CommentReports;
+using AlwaysForum.Api.Repositories.Comments;
+using AlwaysForum.Api.Repositories.CommentUpVotes;
+using AlwaysForum.Api.Repositories.Messages;
+using AlwaysForum.Api.Repositories.PostReports;
+using AlwaysForum.Api.Repositories.Posts;
+using AlwaysForum.Api.Repositories.Reactions;
+using AlwaysForum.Api.Repositories.ReportTypes;
+using AlwaysForum.Api.Repositories.Sections;
+using AlwaysForum.Api.Repositories.Tags;
+using AlwaysForum.Api.Repositories.Users;
 using Microsoft.AspNetCore.Identity;
 
 namespace AlwaysForum.Api.Extensions;
@@ -32,15 +32,15 @@ public static class ServiceCollectionExtensions
     {
         return serviceCollection
             .AddTransient<IUsersService, UsersService>()
-            .AddTransient<ISectionsService, SectionsService>()
-            .AddTransient<IPostsService, PostsService>()
-            .AddTransient<IReactionsService, ReactionsService>()
-            .AddTransient<ICommentsService, CommentsService>()
-            .AddTransient<ICommentVotesService, CommentVotesService>()
-            .AddTransient<IMessagesService, MessagesService>()
-            .AddTransient<IReportTypesService, ReportTypesService>()
-            .AddTransient<IPostReportsService, PostReportsRepository>()
+            .AddTransient<ISectionsRepository, SectionsRepository>()
+            .AddTransient<IPostsRepository, PostsRepository>()
+            .AddTransient<IReactionsRepository, ReactionsRepository>()
+            .AddTransient<ICommentsRepository, CommentsRepository>()
+            .AddTransient<ICommentVotesRepository, CommentVotesRepository>()
+            .AddTransient<IMessagesRepository, MessagesRepository>()
+            .AddTransient<IReportTypesRepository, ReportTypesRepository>()
+            .AddTransient<IPostReportsRepository, PostReportsRepository>()
             .AddTransient<ITagsRepository, TagsRepository>()
-            .AddTransient<ICommentReportsService, CommentReportsService>();
+            .AddTransient<ICommentReportsRepository, CommentReportsRepository>();
     }
 }
