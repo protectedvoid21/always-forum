@@ -11,6 +11,7 @@ using AlwaysForum.Api.Repositories.ReportTypes;
 using AlwaysForum.Api.Repositories.Sections;
 using AlwaysForum.Api.Repositories.Tags;
 using AlwaysForum.Api.Repositories.Users;
+using AlwaysForum.Api.Services.Sections;
 using Microsoft.AspNetCore.Identity;
 
 namespace AlwaysForum.Api.Extensions;
@@ -28,7 +29,7 @@ public static class ServiceCollectionExtensions
         return serviceCollection;
     }
 
-    public static IServiceCollection AddServices(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddRepositories(this IServiceCollection serviceCollection)
     {
         return serviceCollection
             .AddTransient<IUsersService, UsersService>()
@@ -42,5 +43,11 @@ public static class ServiceCollectionExtensions
             .AddTransient<IPostReportsRepository, PostReportsRepository>()
             .AddTransient<ITagsRepository, TagsRepository>()
             .AddTransient<ICommentReportsRepository, CommentReportsRepository>();
+    }
+
+    public static IServiceCollection AddServices(this IServiceCollection serviceCollection)
+    {
+        return serviceCollection
+            .AddTransient<ISectionsService, SectionsService>();
     }
 }

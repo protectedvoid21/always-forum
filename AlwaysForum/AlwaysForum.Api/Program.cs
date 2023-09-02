@@ -1,14 +1,19 @@
 using AlwaysForum.Api.Database;
 using AlwaysForum.Api.Extensions;
+using AlwaysForum.Api.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-builder.Services.AddSqlServer<ForumDbContext>(builder.Configuration.GetConnectionString("ForumDatabase"));
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ResponseBaseFilter>();
+});
+builder.Services.AddSqlServer<ForumDbContext>(builder.Configuration.GetConnectionString("Main-Db"));
 builder.Services.AddIdentity();
 builder.Services.AddServices();
+builder.Services.AddRepositories();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
