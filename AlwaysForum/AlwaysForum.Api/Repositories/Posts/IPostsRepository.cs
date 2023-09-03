@@ -4,17 +4,15 @@ namespace AlwaysForum.Api.Repositories.Posts;
 
 public interface IPostsRepository
 {
-    Task<Post> GetById(int id);
+    Task<Post> GetAsync(int id);
 
-    Task<IEnumerable<Post>> GetBySection(int id);
+    Task<IEnumerable<Post>> GetForSectionAsync(int id);
 
-    Task<int> GetCommentCount(int id);
+    Task AddAsync(Post post);
 
-    Task<int> AddAsync(string title, string description, string authorId, int sectionId);
+    Task<bool> IsAuthorAsync(int postId, string authorId);
 
-    Task<bool> IsAuthor(int postId, string authorId);
+    Task UpdateAsync(Post post);
 
-    Task UpdateAsync(int id, string title, string description);
-
-    Task DeleteAsync(int id);
+    Task DeleteAsync(Post post);
 }

@@ -19,6 +19,9 @@
         <PackageReference Include="Riok.Mapperly" Version="3.1.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
 
+
+
+
     </ItemGroup>
 
 

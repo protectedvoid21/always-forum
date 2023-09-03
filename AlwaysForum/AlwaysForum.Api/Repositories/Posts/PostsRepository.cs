@@ -15,7 +15,7 @@ public class PostsRepository : IPostsRepository
         _dbContext = dbContext;
     }
 
-    public async Task<Post> GetById(int id)
+    public async Task<Post> GetAsync(int id)
     {
         var post = await _dbContext.Posts
             .Include(p => p.Author)
@@ -24,7 +24,7 @@ public class PostsRepository : IPostsRepository
         return post;
     }
 
-    public async Task<IEnumerable<Post>> GetBySection(int id)
+    public async Task<IEnumerable<Post>> GetForSectionAsync(int id)
     {
         return await _dbContext.Posts
             .Include(p => p.Author)
@@ -32,32 +32,16 @@ public class PostsRepository : IPostsRepository
             .ToListAsync();
     }
 
-    public async Task<int> GetCommentCount(int id)
+    public async Task AddAsync(Post post)
     {
-        return await _dbContext.Comments.Where(c => c.PostId == id).CountAsync();
-    }
-
-    public async Task<int> AddAsync(string title, string description, string authorId, int sectionId)
-    {
-        Post post = new()
-        {
-            Title = title,
-            Description = description,
-            AuthorId = authorId,
-            SectionId = sectionId,
-            CreatedDate = DateTime.Now
-        };
-
-        await _dbContext.AddAsync(post);
+        _dbContext.Add(post);
         await _dbContext.SaveChangesAsync();
-
-        return post.Id;
     }
 
-    public async Task<bool> IsAuthor(int postId, string authorId)
+    public async Task<bool> IsAuthorAsync(int postId, string authorId)
     {
         var post = await _dbContext.Posts.FindAsync(postId);
-        if (post == null)
+        if (post is null)
         {
             return false;
         }
@@ -65,32 +49,14 @@ public class PostsRepository : IPostsRepository
         return post.AuthorId == authorId;
     }
 
-    public async Task UpdateAsync(int id, string title, string description)
+    public async Task UpdateAsync(Post post)
     {
-        var post = await _dbContext.Posts.FindAsync(id);
-        if (post == null)
-        {
-            return;
-        }
-
-        post.Title = title;
-        post.Description = description;
-
         _dbContext.Update(post);
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeleteAsync(Post post)
     {
-        var post = await _dbContext.Posts
-            .Include(p => p.Comments)
-            .Include(p => p.PostReports)
-            .FirstOrDefaultAsync(p => p.Id == id);
-        if (post == null)
-        {
-            return;
-        }
-
         _dbContext.Remove(post);
         await _dbContext.SaveChangesAsync();
     }
