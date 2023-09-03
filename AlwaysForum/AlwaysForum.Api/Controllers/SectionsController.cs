@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlwaysForum.Api.Controllers;
 
-public class SectionController : ApiController
+public class SectionsController : ApiController
 {
     private readonly ISectionsService _sectionsService;
     
-    public SectionController(ISectionsService sectionsService)
+    public SectionsController(ISectionsService sectionsService)
     {
         _sectionsService = sectionsService;
     }

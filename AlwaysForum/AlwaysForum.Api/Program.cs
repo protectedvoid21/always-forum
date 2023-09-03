@@ -14,7 +14,8 @@ builder.Services.AddSqlServer<ForumDbContext>(builder.Configuration.GetConnectio
 builder.Services.AddIdentity();
 builder.Services.AddServices();
 builder.Services.AddRepositories();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
