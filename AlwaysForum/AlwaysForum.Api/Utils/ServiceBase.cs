@@ -15,10 +15,10 @@ public class ServiceBase
         };
     }
     
-    protected static TResponse Ok<TResponse>(Action<TResponse> customizeResponse) where TResponse : IResponse, new()
+    protected static TResponse Ok<TResponse>(Action<TResponse>? customizeResponse = null) where TResponse : IResponse, new()
     {
         var response = CreateResponse<TResponse>(200);
-        customizeResponse.Invoke(response);
+        customizeResponse?.Invoke(response);
         return response;
     }
     

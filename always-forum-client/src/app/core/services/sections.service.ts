@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment.development";
 import {Observable} from "rxjs";
-import {SectionsModel} from "../../sections/sections.model";
 import {GetSectionsResponseModel} from "../../sections/getSectionsResponse.model";
 
 @Injectable({

@@ -1,9 +1,10 @@
 using AlwaysForum.Api.Models.Dtos.Posts;
 using AlwaysForum.Api.Utils;
 
-namespace AlwaysForum.Api.Models.Api.Posts;
+namespace AlwaysForum.Api.Models.Api.Sections;
 
-public class GetAllPostsResponse : ResponseBase
+public class GetPostsForSectionResponse : ResponseBase
 {
+    public int SectionId { get; set; }
     public IEnumerable<PostDto> Posts { get; set; } = new List<PostDto>();
 }

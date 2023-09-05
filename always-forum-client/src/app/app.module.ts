@@ -9,12 +9,14 @@ import { NavbarComponent } from './shared/layout/navbar/navbar.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {MatCardModule} from "@angular/material/card";
+import { PostsPageComponent } from './posts/posts-page/posts-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    PostsPageComponent
   ],
   imports: [
     BrowserModule,

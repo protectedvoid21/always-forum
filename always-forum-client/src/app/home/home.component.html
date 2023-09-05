@@ -3,7 +3,9 @@
 
   <div style="width: 100%" *ngIf="sectionsResponse$ | async as sectionsResponse">
     <mat-card *ngFor="let section of sectionsResponse.sections" class="section">
-      <mat-card-header class="section-title">{{section.name}}</mat-card-header>
+      <mat-card-header class="section-title">
+        <a>{{section.name}}</a>
+      </mat-card-header>
       <mat-card-content>{{section.description}}</mat-card-content>
     </mat-card>
   </div>

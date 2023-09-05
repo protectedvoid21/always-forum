@@ -13,9 +13,27 @@ public class PostsController : ApiController
         _postsService = postsService;
     }
     
-    [HttpGet("{sectionId:int}")]
-    public async Task<GetAllPostsResponse> GetForSection(int sectionId)
+    [HttpGet("{request.Id:int}")]
+    public async Task<GetPostResponse> Get([FromRoute] GetPostRequest request)
     {
-        return await _postsService.GetForSectionAsync(sectionId);
+        return await _postsService.GetAsync(request);
+    }
+    
+    [HttpPost]
+    public async Task<CreatePostResponse> Add([FromBody] CreatePostRequest request)
+    {
+        return await _postsService.AddAsync(request);
+    }
+    
+    [HttpPut("{request.PostId:int}")]
+    public async Task<UpdatePostResponse> Update(UpdatePostRequest request)
+    {
+        return await _postsService.UpdateAsync(request);
+    }
+    
+    [HttpDelete("{request.PostId:int}")]
+    public async Task<DeletePostResponse> Delete(DeletePostRequest request)
+    {
+        return await _postsService.DeleteAsync(request);
     }
 }
