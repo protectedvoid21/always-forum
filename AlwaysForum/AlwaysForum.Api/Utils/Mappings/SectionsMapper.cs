@@ -5,7 +5,7 @@ using Riok.Mapperly.Abstractions;
 namespace AlwaysForum.Api.Utils.Mappings;
 
 [Mapper]
-public partial class SectionMapper
+public partial class SectionsMapper
 {
     public partial SectionDto MapToDto(Section section);
 }

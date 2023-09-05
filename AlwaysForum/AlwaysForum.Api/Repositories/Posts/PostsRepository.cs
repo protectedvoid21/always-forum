@@ -15,32 +15,31 @@ public class PostsRepository : IPostsRepository
         _dbContext = dbContext;
     }
 
-    public async Task<Post> GetAsync(int id)
+    public async Task<Post?> GetAsync(int id, CancellationToken ct = default)
     {
-        var post = await _dbContext.Posts
+        return await _dbContext.Posts
             .Include(p => p.Author)
             .Include(p => p.Tags)
-            .FirstAsync(p => p.Id == id);
-        return post;
+            .FirstOrDefaultAsync(p => p.Id == id, ct);
     }
 
-    public async Task<IEnumerable<Post>> GetForSectionAsync(int id)
+    public async Task<IEnumerable<Post>> GetForSectionAsync(int id, CancellationToken ct = default)
     {
         return await _dbContext.Posts
             .Include(p => p.Author)
             .Where(p => p.SectionId == id)
-            .ToListAsync();
+            .ToListAsync(ct);
     }
 
-    public async Task AddAsync(Post post)
+    public async Task AddAsync(Post post, CancellationToken ct = default)
     {
         _dbContext.Add(post);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(ct);
     }
 
-    public async Task<bool> IsAuthorAsync(int postId, string authorId)
+    public async Task<bool> IsAuthorAsync(int postId, string authorId, CancellationToken ct = default)
     {
-        var post = await _dbContext.Posts.FindAsync(postId);
+        var post = await _dbContext.Posts.FindAsync(new object?[] { postId }, cancellationToken: ct);
         if (post is null)
         {
             return false;
@@ -49,15 +48,15 @@ public class PostsRepository : IPostsRepository
         return post.AuthorId == authorId;
     }
 
-    public async Task UpdateAsync(Post post)
+    public async Task UpdateAsync(Post post, CancellationToken ct = default)
     {
         _dbContext.Update(post);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(ct);
     }
 
-    public async Task DeleteAsync(Post post)
+    public async Task DeleteAsync(Post post, CancellationToken ct = default)
     {
         _dbContext.Remove(post);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(ct);
     }
 }

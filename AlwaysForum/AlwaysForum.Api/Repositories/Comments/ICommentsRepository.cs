@@ -6,11 +6,11 @@ public interface ICommentsRepository
 {
     Task AddAsync(string description, int postId, string authorId);
 
-    Task<IEnumerable<Comment>> GetByPost(int postId);
+    Task<IEnumerable<Comment>> GetForPostAsync(int postId);
 
-    Task<bool> IsAuthor(int commentId, string authorId);
+    Task<bool> IsAuthorAsync(int commentId, string authorId);
 
-    Task<int> GetCountInPost(int postId);
+    Task<int> GetCountForPostAsync(int postId);
 
     Task UpdateAsync(int id, string description);
 

@@ -5,7 +5,7 @@ using Riok.Mapperly.Abstractions;
 namespace AlwaysForum.Api.Utils.Mappings;
 
 [Mapper]
-public partial class PostMapper
+public partial class PostsMapper
 {
     public partial PostDto MapToDto(Post post);
 }

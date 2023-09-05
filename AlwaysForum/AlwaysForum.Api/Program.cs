@@ -1,6 +1,7 @@
 using AlwaysForum.Api.Database;
 using AlwaysForum.Api.Extensions;
 using AlwaysForum.Api.Filters;
+using AlwaysForum.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,8 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -26,14 +26,14 @@ public class CommentsRepository : ICommentsRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<Comment>> GetByPost(int postId)
+    public async Task<IEnumerable<Comment>> GetForPostAsync(int postId)
     {
         return _dbContext.Comments
             .Include(c => c.Author)
             .Where(c => c.PostId == postId);
     }
 
-    public async Task<bool> IsAuthor(int commentId, string authorId)
+    public async Task<bool> IsAuthorAsync(int commentId, string authorId)
     {
         var comment = await _dbContext.Comments.FindAsync(commentId);
         if (comment == null)
@@ -44,7 +44,7 @@ public class CommentsRepository : ICommentsRepository
         return comment.AuthorId == authorId;
     }
 
-    public async Task<int> GetCountInPost(int postId)
+    public async Task<int> GetCountForPostAsync(int postId)
     {
         return await _dbContext.Comments.CountAsync(p => p.PostId == postId);
     }

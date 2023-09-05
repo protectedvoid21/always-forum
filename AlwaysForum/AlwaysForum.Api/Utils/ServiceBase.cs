@@ -27,14 +27,9 @@ public class ServiceBase
         return CreateResponse<TResponse>(400, errorMessage);
     }
     
-    protected static TResponse NotFound<TResponse>(string errorMessage) where TResponse : IResponse, new()
+    protected static TResponse NotFound<TResponse>() where TResponse : IResponse, new()
     {
-        return CreateResponse<TResponse>(404, errorMessage);
-    }
-
-    protected static TResponse InternalServerError<TResponse>(string errorMessage) where TResponse : IResponse, new()
-    {
-        return CreateResponse<TResponse>(500, errorMessage);
+        return CreateResponse<TResponse>(404, "Entity was not found");
     }
     
     protected static TResponse HandleValidationException<TResponse>(ValidationException ex) where TResponse : IResponse, new()

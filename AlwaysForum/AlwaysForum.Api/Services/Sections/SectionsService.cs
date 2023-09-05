@@ -14,18 +14,12 @@ public class SectionsService : ServiceBase, ISectionsService
         _sectionsRepository = sectionsRepository;
     }
 
-    public async Task<GetAllSectionResponse> GetAllAsync()
+    public async Task<GetAllSectionResponse> GetAllAsync(CancellationToken ct = default)
     {
-        try
-        {
-            var sections = await _sectionsRepository.GetAllAsync();
-            var mapper = new SectionMapper();
-            var sectionsDto = sections.Select(s => mapper.MapToDto(s));
-            return Ok<GetAllSectionResponse>(response => { response.Sections = sectionsDto; });
-        }
-        catch (Exception ex)
-        {
-            return HandleException<GetAllSectionResponse>(ex);
-        }
+        var sections = await _sectionsRepository.GetAllAsync();
+        var mapper = new SectionsMapper();
+        var sectionsDto = sections.Select(s => mapper.MapToDto(s));
+        
+        return Ok<GetAllSectionResponse>(response => { response.Sections = sectionsDto; });
     }
 }

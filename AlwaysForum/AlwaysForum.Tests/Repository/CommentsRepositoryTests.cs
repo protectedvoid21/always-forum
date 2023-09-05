@@ -32,7 +32,7 @@ public class CommentsRepositoryTests {
         await _repository.AddAsync("Desc2", 1, user.Id);
         await _repository.AddAsync("Desc3", 2, user.Id);
 
-        var comments = await _repository.GetByPost(1);
+        var comments = await _repository.GetForPostAsync(1);
 
         Assert.Equal(2, comments.Count());
     }
@@ -51,7 +51,7 @@ public class CommentsRepositoryTests {
 
         var comment = await _dbContext.Comments.FirstAsync();
         
-        Assert.Equal(expected, await _repository.IsAuthor(comment.Id, otherId));
+        Assert.Equal(expected, await _repository.IsAuthorAsync(comment.Id, otherId));
     }
 
     [Theory]
@@ -83,7 +83,7 @@ public class CommentsRepositoryTests {
         await _dbContext.AddRangeAsync(comments);
         await _dbContext.SaveChangesAsync();
 
-        var commentCountFromService = await _repository.GetCountInPost(1);
+        var commentCountFromService = await _repository.GetCountForPostAsync(1);
         Assert.Equal(commentCount, commentCountFromService);
     }
 
