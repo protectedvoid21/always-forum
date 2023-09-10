@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlwaysForum.Api.Repositories.Users;
 
-public class UsersService : IUsersService
+public class UsersRepository : IUsersRepository
 {
     private readonly UserManager<ForumUser> _userManager;
 
-    public UsersService(UserManager<ForumUser> userManager)
+    public UsersRepository(UserManager<ForumUser> userManager)
     {
         _userManager = userManager;
     }

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AlwaysForum.Api.Repositories.Users;
 
-public interface IUsersService
+public interface IUsersRepository
 {
     Task<IdentityResult> AddAsync(string userName, string password, string email);
 

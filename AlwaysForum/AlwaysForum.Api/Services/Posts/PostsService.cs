@@ -6,6 +6,7 @@ using AlwaysForum.Api.Repositories.Posts;
 using AlwaysForum.Api.Services.Comments;
 using AlwaysForum.Api.Utils;
 using AlwaysForum.Api.Utils.Mappings;
+using FluentValidation;
 
 namespace AlwaysForum.Api.Services.Posts;
 
@@ -13,11 +14,16 @@ public class PostsService : ServiceBase, IPostsService
 {
     private readonly IPostsRepository _postsRepository;
     private readonly ICommentsRepository _commentsRepository;
+    private readonly IValidator<CreatePostRequest> _createPostRequestValidator;
 
-    public PostsService(IPostsRepository postsRepository, ICommentsRepository commentsRepository)
+    public PostsService(
+        IPostsRepository postsRepository, 
+        ICommentsRepository commentsRepository, 
+        IValidator<CreatePostRequest> createPostRequestValidator)
     {
         _postsRepository = postsRepository;
         _commentsRepository = commentsRepository;
+        _createPostRequestValidator = createPostRequestValidator;
     }
 
     public async Task<GetPostsForSectionResponse> GetForSectionAsync(GetPostsForSectionRequest request, CancellationToken ct = default)
@@ -42,8 +48,14 @@ public class PostsService : ServiceBase, IPostsService
         return Ok<GetPostResponse>(response => { response.Post = postDto; });
     }
 
-    public async Task<CreatePostResponse> AddAsync(CreatePostRequest request, CancellationToken ct = default)
+    public async Task<ResponseBase> AddAsync(CreatePostRequest request, CancellationToken ct = default)
     {
+        var validationRequest = await _createPostRequestValidator.ValidateAsync(request, ct);
+        if (!validationRequest.IsValid)
+        {
+            return ValidationFailed<ResponseBase>(validationRequest.Errors);
+        }
+        
         var post = new Post
         {
             Title = request.Title,
@@ -54,15 +66,15 @@ public class PostsService : ServiceBase, IPostsService
 
         await _postsRepository.AddAsync(post, ct);
 
-        return Ok<CreatePostResponse>();
+        return Ok<ResponseBase>();
     }
 
-    public async Task<UpdatePostResponse> UpdateAsync(UpdatePostRequest request, CancellationToken ct = default)
+    public async Task<ResponseBase> UpdateAsync(UpdatePostRequest request, CancellationToken ct = default)
     {
         var post = await _postsRepository.GetAsync(request.PostId, ct);
         if (post is null)
         {
-            return NotFound<UpdatePostResponse>();
+            return NotFound<ResponseBase>();
         }
         
         post.Title = request.Title;
@@ -70,18 +82,18 @@ public class PostsService : ServiceBase, IPostsService
 
         await _postsRepository.UpdateAsync(post, ct);
 
-        return Ok<UpdatePostResponse>();
+        return Ok<ResponseBase>();
     }
 
-    public async Task<DeletePostResponse> DeleteAsync(DeletePostRequest request, CancellationToken ct = default)
+    public async Task<ResponseBase> DeleteAsync(DeletePostRequest request, CancellationToken ct = default)
     {
         var post = await _postsRepository.GetAsync(request.PostId, ct);
         if (post is null)
         {
-            return NotFound<DeletePostResponse>();
+            return NotFound<ResponseBase>();
         }
         await _postsRepository.DeleteAsync(post, ct);
 
-        return Ok<DeletePostResponse>();
+        return Ok<ResponseBase>();
     }
 }
